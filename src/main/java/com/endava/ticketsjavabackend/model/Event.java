@@ -1,5 +1,6 @@
 package com.endava.ticketsjavabackend.model;
 
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -21,6 +22,7 @@ public class Event implements Serializable {
 
     @ManyToOne
     @JoinColumn(name = "event_type_id")
+    @JsonUnwrapped
     private EventType eventType;
 
     @Column(name = "event_description")
