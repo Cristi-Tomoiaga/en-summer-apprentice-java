@@ -1,5 +1,6 @@
 package com.endava.ticketsjavabackend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import jakarta.persistence.*;
 
@@ -39,8 +40,8 @@ public class Event implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime endDate;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "event_id")
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<TicketCategory> ticketCategories = new ArrayList<>();
 
     public Event() {
@@ -121,9 +122,11 @@ public class Event implements Serializable {
 
     public void addTicketCategory(TicketCategory ticketCategory) {
         this.ticketCategories.add(ticketCategory);
+        ticketCategory.setEvent(this);
     }
 
     public void removeTicketCategory(TicketCategory ticketCategory) {
         this.ticketCategories.remove(ticketCategory);
+        ticketCategory.setEvent(null);
     }
 }
