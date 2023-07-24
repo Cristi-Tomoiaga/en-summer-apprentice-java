@@ -2,7 +2,7 @@ package com.endava.ticketsjavabackend.controller;
 
 import com.endava.ticketsjavabackend.mapstruct.dto.OrderGetDto;
 import com.endava.ticketsjavabackend.mapstruct.dto.OrderPostDto;
-import com.endava.ticketsjavabackend.service.OrderServiceImpl;
+import com.endava.ticketsjavabackend.service.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,20 +15,20 @@ import java.util.Map;
 @RequestMapping("/api/orders")
 public class OrderController {
     private static final Integer customerId = 3;
-    private final OrderServiceImpl orderServiceImpl;
+    private final OrderService orderService;
 
-    public OrderController(OrderServiceImpl orderServiceImpl) {
-        this.orderServiceImpl = orderServiceImpl;
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
     }
 
     @GetMapping
     public List<OrderGetDto> getAllByCustomerId() {
-        return orderServiceImpl.findOrdersByCustomerId(customerId);
+        return orderService.findOrdersByCustomerId(customerId);
     }
 
     @PostMapping
     public ResponseEntity<?> saveOrder(@RequestBody OrderPostDto order) {
-        OrderGetDto result = orderServiceImpl.saveOrder(order, customerId);
+        OrderGetDto result = orderService.saveOrder(order, customerId);
 
         if (result == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
