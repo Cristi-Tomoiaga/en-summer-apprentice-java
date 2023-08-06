@@ -1,18 +1,23 @@
 package com.endava.ticketsjavabackend.mapstruct.dto;
 
+import com.endava.ticketsjavabackend.model.Event;
+import com.endava.ticketsjavabackend.model.TicketCategory;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
 
 public class OrderGetDto {
-    @JsonProperty("eventId")
-    private int eventId;
+    @JsonProperty("id")
+    private int id;
+
+    @JsonProperty("event")
+    private Event event;
 
     @JsonProperty("timestamp")
     private LocalDateTime timestamp;
 
-    @JsonProperty("ticketCategoryId")
-    private int ticketCategoryId;
+    @JsonProperty("ticketCategory")
+    private TicketCategory ticketCategory;
 
     @JsonProperty("numberOfTickets")
     private int numberOfTickets;
@@ -20,10 +25,11 @@ public class OrderGetDto {
     @JsonProperty("totalPrice")
     private double totalPrice;
 
-    public OrderGetDto(int eventId, LocalDateTime timestamp, int ticketCategoryId, int numberOfTickets, double totalPrice) {
-        this.eventId = eventId;
+    public OrderGetDto(int id, Event event, LocalDateTime timestamp, TicketCategory ticketCategory, int numberOfTickets, double totalPrice) {
+        this.id = id;
+        this.event = event;
         this.timestamp = timestamp;
-        this.ticketCategoryId = ticketCategoryId;
+        this.ticketCategory = ticketCategory;
         this.numberOfTickets = numberOfTickets;
         this.totalPrice = totalPrice;
     }
@@ -31,12 +37,20 @@ public class OrderGetDto {
     public OrderGetDto() {
     }
 
-    public int getEventId() {
-        return eventId;
+    public int getId() {
+        return id;
     }
 
-    public void setEventId(int eventId) {
-        this.eventId = eventId;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
     }
 
     public LocalDateTime getTimestamp() {
@@ -47,12 +61,12 @@ public class OrderGetDto {
         this.timestamp = timestamp;
     }
 
-    public int getTicketCategoryId() {
-        return ticketCategoryId;
+    public TicketCategory getTicketCategory() {
+        return ticketCategory;
     }
 
-    public void setTicketCategoryId(int ticketCategoryId) {
-        this.ticketCategoryId = ticketCategoryId;
+    public void setTicketCategory(TicketCategory ticketCategory) {
+        this.ticketCategory = ticketCategory;
     }
 
     public int getNumberOfTickets() {

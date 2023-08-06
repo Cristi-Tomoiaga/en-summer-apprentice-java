@@ -21,8 +21,8 @@ public class EventController {
     }
 
     @GetMapping
-    public List<Event> getAllByVenueIdAndEventType(@RequestParam(name = "venueId", required = false) Integer venueId,
+    public List<Event> getAllByVenueLocationAndEventType(@RequestParam(name = "venueLocation", required = false) String venueLocation,
                                                    @RequestParam(name = "eventType", required = false) String eventType) {
-        return eventService.findEventsByVenueIdAndEventType(venueId, eventType);
+        return eventService.findEventsByVenueLocationAndEventType(venueLocation, eventType);
     }
 }

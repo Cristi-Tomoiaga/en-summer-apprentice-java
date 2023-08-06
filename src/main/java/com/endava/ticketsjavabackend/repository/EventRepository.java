@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface EventRepository extends ListCrudRepository<Event, Integer> {
-    List<Event> findEventsByVenue_IdAndEventType_Name(Integer venueId, String eventTypeName);
-    List<Event> findEventsByVenue_Id(Integer venueId);
-    List<Event> findEventsByEventType_Name(String eventTypeName);
+    List<Event> findEventsByVenue_LocationContainingAndEventType_NameContaining(String venueLocation, String eventTypeName);
+    List<Event> findEventsByVenue_LocationContaining(String venueLocation);
+    List<Event> findEventsByEventType_NameContaining(String eventTypeName);
 }

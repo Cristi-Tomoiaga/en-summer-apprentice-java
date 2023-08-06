@@ -17,19 +17,19 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public List<Event> findEventsByVenueIdAndEventType(Integer venueId, String eventType) {
-        if (eventType == null && venueId == null) {
+    public List<Event> findEventsByVenueLocationAndEventType(String venueLocation, String eventType) {
+        if (eventType == null && venueLocation == null) {
             return eventRepository.findAll();
         }
 
         if (eventType == null) {
-            return eventRepository.findEventsByVenue_Id(venueId);
+            return eventRepository.findEventsByVenue_LocationContaining(venueLocation.trim());
         }
 
-        if (venueId == null) {
-            return eventRepository.findEventsByEventType_Name(eventType);
+        if (venueLocation == null) {
+            return eventRepository.findEventsByEventType_NameContaining(eventType.trim());
         }
 
-        return eventRepository.findEventsByVenue_IdAndEventType_Name(venueId, eventType);
+        return eventRepository.findEventsByVenue_LocationContainingAndEventType_NameContaining(venueLocation.trim(), eventType.trim());
     }
 }

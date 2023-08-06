@@ -7,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -34,8 +32,8 @@ public class OrderController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        Map<String, OrderGetDto> resultBody = new HashMap<>();
-        resultBody.put("order", result);
-        return new ResponseEntity<>(resultBody, HttpStatus.CREATED);
+//        Map<String, OrderGetDto> resultBody = new HashMap<>();
+//        resultBody.put("order", result);
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 }

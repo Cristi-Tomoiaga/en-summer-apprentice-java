@@ -40,6 +40,9 @@ public class Event implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime endDate;
 
+    @Column(name = "image_url")
+    private String image;
+
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<TicketCategory> ticketCategories = new ArrayList<>();
@@ -47,13 +50,14 @@ public class Event implements Serializable {
     public Event() {
     }
 
-    public Event(Venue venue, EventType eventType, String description, String name, LocalDateTime startDate, LocalDateTime endDate) {
+    public Event(Venue venue, EventType eventType, String description, String name, LocalDateTime startDate, LocalDateTime endDate, String image) {
         this.venue = venue;
         this.eventType = eventType;
         this.description = description;
         this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.image = image;
     }
 
     public Integer getId() {
@@ -110,6 +114,14 @@ public class Event implements Serializable {
 
     public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public List<TicketCategory> getTicketCategories() {

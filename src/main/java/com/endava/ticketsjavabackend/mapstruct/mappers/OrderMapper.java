@@ -17,8 +17,7 @@ public abstract class OrderMapper {
     protected TicketCategoryRepository ticketCategoryRepository;
 
     @Mapping(source = "orderedAt", target = "timestamp")
-    @Mapping(source = "ticketCategory.id", target = "ticketCategoryId")
-    @Mapping(source = "ticketCategory.event.id", target = "eventId")
+    @Mapping(source = "ticketCategory.event", target = "event")
     public abstract OrderGetDto orderToOrderGetDto(Order order);
 
     @Mapping(target = "ticketCategory", expression = "java( ticketCategoryRepository.findById(orderPostDto.getTicketCategoryId()).get() )")

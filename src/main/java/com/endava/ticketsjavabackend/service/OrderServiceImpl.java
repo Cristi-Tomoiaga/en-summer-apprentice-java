@@ -43,6 +43,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderGetDto saveOrder(OrderPostDto order, Integer customerId) {
+        if (order.getNumberOfTickets() <= 0) {
+            return null;
+        }
+
         Optional<Customer> customer = customerRepository.findById(customerId);
         if (customer.isEmpty()) {
             return null;
