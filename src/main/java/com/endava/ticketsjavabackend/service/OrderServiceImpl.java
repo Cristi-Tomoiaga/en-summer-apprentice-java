@@ -1,5 +1,8 @@
 package com.endava.ticketsjavabackend.service;
 
+import com.endava.ticketsjavabackend.exception.InvalidIdException;
+import com.endava.ticketsjavabackend.exception.InvalidNumberOfTicketsException;
+import com.endava.ticketsjavabackend.exception.InvalidTicketCategoryException;
 import com.endava.ticketsjavabackend.mapstruct.dto.OrderGetDto;
 import com.endava.ticketsjavabackend.mapstruct.dto.OrderPostDto;
 import com.endava.ticketsjavabackend.mapstruct.mappers.OrderMapper;
@@ -44,26 +47,26 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderGetDto saveOrder(OrderPostDto order, Integer customerId) {
         if (order.getNumberOfTickets() <= 0) {
-            return null;
+            throw new InvalidNumberOfTicketsException(order.getNumberOfTickets());
         }
 
         Optional<Customer> customer = customerRepository.findById(customerId);
         if (customer.isEmpty()) {
-            return null;
+            throw new InvalidIdException(customerId, "Customer");
         }
 
         Optional<TicketCategory> ticketCategory = ticketCategoryRepository.findById(order.getTicketCategoryId());
         if (ticketCategory.isEmpty()) {
-            return null;
+            throw new InvalidIdException(order.getTicketCategoryId(), "TicketCategory");
         }
 
         Optional<Event> event = eventRepository.findById(order.getEventId());
         if (event.isEmpty()) {
-            return null;
+            throw new InvalidIdException(order.getEventId(), "Event");
         }
 
         if (!ticketCategory.get().getEvent().getId().equals(event.get().getId())) {
-            return null;
+            throw new InvalidTicketCategoryException(order.getTicketCategoryId(), order.getEventId());
         }
 
         Order convertedOrder = orderMapper.orderPostDtoToOrder(order);

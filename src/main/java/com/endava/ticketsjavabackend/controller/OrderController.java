@@ -29,12 +29,6 @@ public class OrderController {
     public ResponseEntity<?> saveOrder(@RequestBody OrderPostDto order) {
         OrderGetDto result = orderService.saveOrder(order, customerId);
 
-        if (result == null) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-//        Map<String, OrderGetDto> resultBody = new HashMap<>();
-//        resultBody.put("order", result);
         return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 }
