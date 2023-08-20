@@ -3,6 +3,7 @@ package com.endava.ticketsjavabackend.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Generated;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -42,6 +43,10 @@ public class Event implements Serializable {
 
     @Column(name = "image_url")
     private String image;
+
+    @Generated(event = {org.hibernate.generator.EventType.INSERT, org.hibernate.generator.EventType.UPDATE})
+    @Column(name = "available_seats")
+    private int availableSeats;
 
     @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
@@ -122,6 +127,10 @@ public class Event implements Serializable {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public int getAvailableSeats() {
+        return availableSeats;
     }
 
     public List<TicketCategory> getTicketCategories() {
