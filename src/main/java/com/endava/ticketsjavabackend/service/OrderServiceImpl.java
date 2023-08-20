@@ -3,6 +3,7 @@ package com.endava.ticketsjavabackend.service;
 import com.endava.ticketsjavabackend.exception.InvalidIdException;
 import com.endava.ticketsjavabackend.exception.InvalidNumberOfTicketsException;
 import com.endava.ticketsjavabackend.exception.InvalidTicketCategoryException;
+import com.endava.ticketsjavabackend.exception.UnavailableSeatsException;
 import com.endava.ticketsjavabackend.mapstruct.dto.OrderGetDto;
 import com.endava.ticketsjavabackend.mapstruct.dto.OrderPostDto;
 import com.endava.ticketsjavabackend.mapstruct.mappers.OrderMapper;
@@ -67,6 +68,10 @@ public class OrderServiceImpl implements OrderService {
 
         if (!ticketCategory.get().getEvent().getId().equals(event.get().getId())) {
             throw new InvalidTicketCategoryException(order.getTicketCategoryId(), order.getEventId());
+        }
+
+        if (order.getNumberOfTickets() > event.get().getAvailableSeats()) {
+            throw new UnavailableSeatsException(order.getNumberOfTickets(), event.get().getAvailableSeats(), event.get().getId());
         }
 
         Order convertedOrder = orderMapper.orderPostDtoToOrder(order);

@@ -3,6 +3,7 @@ package com.endava.ticketsjavabackend.exception.handler;
 import com.endava.ticketsjavabackend.exception.InvalidIdException;
 import com.endava.ticketsjavabackend.exception.InvalidNumberOfTicketsException;
 import com.endava.ticketsjavabackend.exception.InvalidTicketCategoryException;
+import com.endava.ticketsjavabackend.exception.UnavailableSeatsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -26,6 +27,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(InvalidTicketCategoryException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public @ResponseBody ApiErrorResponse handleInvalidTicketCategoryException(RuntimeException ex) {
+        return new ApiErrorResponse(ex.getMessage());
+    }
+
+    @ExceptionHandler(UnavailableSeatsException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public @ResponseBody ApiErrorResponse handleUnavailableSeatsException(RuntimeException ex) {
         return new ApiErrorResponse(ex.getMessage());
     }
 
