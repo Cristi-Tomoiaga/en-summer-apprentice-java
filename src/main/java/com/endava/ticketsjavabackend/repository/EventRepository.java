@@ -2,13 +2,12 @@ package com.endava.ticketsjavabackend.repository;
 
 import com.endava.ticketsjavabackend.model.Event;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.ListCrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface EventRepository extends ListCrudRepository<Event, Integer> {
+public interface EventRepository extends RefreshJpaRepository<Event, Integer> {
     @Query("select e from Event e where e.venue.location like %?1% and e.eventType.name like %?2% and e.availableSeats > 0")
     List<Event> findAvailableEventsByVenueLocationAndEventType(String venueLocation, String eventTypeName);
 

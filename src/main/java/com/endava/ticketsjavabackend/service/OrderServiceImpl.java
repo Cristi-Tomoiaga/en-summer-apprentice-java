@@ -77,6 +77,10 @@ public class OrderServiceImpl implements OrderService {
         Order convertedOrder = orderMapper.orderPostDtoToOrder(order);
         convertedOrder.setCustomer(customer.get());
         convertedOrder.setTotalPrice(convertedOrder.getTicketCategory().getPrice() * convertedOrder.getNumberOfTickets());
-        return orderMapper.orderToOrderGetDto(orderRepository.save(convertedOrder));
+
+        Order savedOrder = orderRepository.save(convertedOrder);
+        eventRepository.refresh(event.get());
+
+        return orderMapper.orderToOrderGetDto(savedOrder);
     }
 }
